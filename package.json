@@ -1,0 +1,43 @@
+{
+  "name": "image-processor",
+  "version": "1.0.0",
+  "description": "Batch processing the image with breakpoints and uploading it to AZURE & GCP",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm install && npm run build",
+    "start": "PORT=4002 node ./public/server.js",
+    "dev": "PORT=4002 nodemon ./server/server.js",
+    "build": "webpack --config ./webpack.config.js --mode production"
+  },
+  "keywords": [
+    "node",
+    "image",
+    "processing",
+    "azure",
+    "gcp",
+    "cloud"
+  ],
+  "dependencies": {
+    "@google-cloud/storage": "^2.5.0",
+    "azure-storage": "^2.10.2",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "hbs": "^4.0.3",
+    "request": "^2.88.0",
+    "rimraf": "^2.6.3",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "public",
+      "node_modules/**/node_modules"
+    ]
+  },
+  "author": "G@ur@v M@ll",
+  "license": "ISC"
+}
