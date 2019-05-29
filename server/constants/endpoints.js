@@ -1,12 +1,17 @@
 module.exports = {
     root: "/",
-    physicalReport: "/generateWebReport",
-    archive: "/archive",
+    upload: "/upload",
+    process: "/process",
+    processed: "/processed",
+    image: "/image",
+    adjust: "/adjust",
+    uploadapi: "/api/photo",
+    settingsapi: "/api/savesettings",
+    cloud: "/cloud",
+    pushimages: "/pushimages",
     azure: "/pushToAzure",
     gcp: "/pushToGCP",
-    hook: "/hookme",
-    webReport: "/webReport",
-    view: "/hookview",
-    viewUIForm: "/viewform",
-    viewUI: "/generatetimeline"
+    checkCloudStatus: "/checkCloudStatus",
+    checkUploadStatus: "/checkUploadStatus",
+    checkCloudStatus: "/checkCloudStatus"
 }

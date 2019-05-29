@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-md-6">
+        <p class="lead"><strong>Image variations</strong></p>
+    </div>
+    <div class="col-md-6 text-right">
+        <p class="lead text-info"><strong>Uploaded Dimension : {{uploadedObj.dimension}}</strong></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="breakpoint-images">
+            {{#each images}}
+            <div style="width: {{this.type}}px;" class="image-variation" title="{{this.img}}">
+                <a class="image-anchor" target="_blank" href="/{{this.imgRoot}}/{{this.dir}}/{{this.img}}">
+                    <div class="ui-widget-content cropper"></div>
+                    <img src="/{{this.imgRoot}}/{{this.dir}}/{{this.img}}">
+                </a>
+                <div class="details">
+                    <span class="dimension">Viewport: {{this.width}}</span>
+                </div>
+                <div class="base-sixty">
+                    <a target="_blank" href="/image?base64='/{{this.dir}}/{{this.img}}'&img={{this.baseImg}}">
+                        get base64
+                    </a>
+                </div>
+                <div class="crop-container">
+                    <input type="text" name="{{this.width}}x" class="x" placeholder="x" disabled>
+                    <input type="text" name="{{this.width}}y" class="y" placeholder="y" disabled>
+                    <input type="text" name="{{this.width}}w" class="w" placeholder="w" disabled>
+                    <input type="text" name="{{this.width}}h" class="h" placeholder="h" disabled>
+                    <a data-href="/image?crop=true&path='/{{this.dir}}/{{this.img}}'&img={{this.baseImg}}"
+                        href="javascript:alert('Enter all values to crop')">
+                        Crop Image
+                </div>
+                </a>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+{{#if uploadedObj.cropped}}
+<hr>
+<div class="row cropped">
+    <div class="col-md-12">
+        <p class="lead"><strong>Cropped Images</strong></p>
+        <div class="cropped-container">
+        {{#each uploadedObj.cropped}}
+            <div class="item">
+                <a class="image-anchor" target="_blank" href="/uploads/{{this}}">
+                <img src="/uploads/{{this}}">
+                </a>
+            </div>
+        {{/each}}
+        </div>
+    </div>
+</div>
+{{/if}}
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <p class="lead"><strong>Responsive Picture tag</strong></p>
+    </div>
+    <div class="col-md-6">
+
+        <p>Viewport with filenames</p>
+        <code>
+            &lt;picture&gt;<br>
+                {{#each images}}
+                &nbsp;&nbsp;&nbsp;&lt;source srcset="/img/{{this.dir}}/{{this.img}}" media="(min-width: {{this.width}}px)"&gt;<br>
+                {{/each}}
+                &nbsp;&nbsp;&nbsp;&lt;img src="/img/{{primaryImg.dir}}/{{primaryImg.img}}" alt="{{primaryImg.img}}"&gt;<br>
+            &lt;/picture&gt;<br>
+        </code>
+    </div>
+    <div class="col-md-6">
+        <p>Showcase</p>
+        <picture>
+            {{#each images}}
+            <source srcset="/{{this.imgRoot}}/{{this.dir}}/{{this.img}}" media="(min-width: {{this.width}}px)">
+            {{/each}}
+            <img src="/{{primaryImg.imgRoot}}/{{primaryImg.dir}}/{{primaryImg.img}}" alt="{{primaryImg.img}}">
+        </picture>
+    </div>
+</div>
+<hr>

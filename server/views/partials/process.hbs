@@ -1,0 +1,32 @@
+{{#if images.length}}
+<div class="row">
+    <div class="col-md-6">
+        <p class="lead"><strong>Choose Image to adjust</strong></p>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="/cloud" class="btn btn-primary">Upload to Cloud</a>
+    </div>
+    <div class="col-md-12">
+        <div class="thumb-list">
+            {{#each images}}
+            <div class="thumbs">
+                <a class="thumb-img" href="/adjust?img={{this.name}}">
+                    <img src="/{{this.imgRoot}}/{{this.imgDir}}/{{this.name}}">
+                </a>
+                <div class="name">{{this.name}}</div>
+                <div class="dimension">{{this.dimension}}</div>
+                <div class="ratio">{{this.ratio}}</div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+{{else}}
+<div class="row">
+    <div class="col-md-12 notFound">
+        <p class="lead"><strong>No images uploaded</strong></p>
+        <a href="/upload">Upload Images</a>
+    </div>
+</div>
+{{/if}}
+<hr>

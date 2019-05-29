@@ -4,9 +4,10 @@
 <head>
     {{> title}}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <link href='/static/css/app.css' rel='stylesheet'>
 
 </head>
@@ -15,18 +16,12 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="display-4">Image Process</h1>
+                <h1 class="display-4">Adjust Breakpoints</h1>
             </div>
         </div>
         <hr>
-        {{#if this.root}}
-        {{> root}}
-        {{/if}}
-        {{#if this.upload}}
-        {{> upload}}
-        {{/if}}
-        {{#if this.process}}
-        {{> process}}
+        {{#if this.adjust}}
+        {{> adjust}}
         {{/if}}
     </div>
     <script src="/static/js/client.js"></script>

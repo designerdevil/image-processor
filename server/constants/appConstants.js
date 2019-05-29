@@ -1,4 +1,8 @@
 module.exports = {
+    imgDir: {
+        root: 'uploads',
+        thumb: 'thumbs'
+    },
     events: {
         deployment: 'deployment',
         view: 'view',

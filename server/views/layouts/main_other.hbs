@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang='en'>
+
+<head>
+    {{> title}}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {{#if this.progress}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.js"></script>
+    {{/if}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href='/static/css/app_other.css' rel='stylesheet'>
+    <script type="text/javascript">
+        const url = '{{this.chkStatusURL}}';
+    </script>
+</head>
+
+<body>
+    {{#if this.progress}}
+        <div id="spaceJump" class="text">Sit back and Relax</div>
+        <div id="congratulations" class="text" style="display: none;">
+            <div>
+            <div class="main-msg">{{this.message}}</div>
+            {{{this.additionalInfo}}}
+            <a href="{{this.cta}}">{{this.ctaTxt}}</a>
+            </div>
+        </div>
+        <script src="/static/js/animation.js"></script>
+        <script src="/static/js/progress.js"></script>
+    {{/if}}
+</body>
+
+</html>

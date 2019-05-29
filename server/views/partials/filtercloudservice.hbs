@@ -1,0 +1,41 @@
+<div class="row ">
+    <div class="col-md-12">
+        <form method="POST" action="/pushimages" class="form-horizontal">
+            <div class="row form-group">
+                <div class="col-md-3 align-self-center">Select breakpoints to upload</div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <select name="breakpoints" class="selectpicker col-md-12" multiple data-live-search="true">
+                            {{#each breakpoints}}
+                            <option value="{{this.width}}">{{this.width}}</option>
+                            {{/each}}
+                        </select></div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-3 align-self-center">Cloud service</div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <select name="service" class="selectpicker col-md-12">
+                            <option value="gcp">GCP</option>
+                            <option value="azure">Azure</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-3 align-self-center">Connection String/ Project name</div>
+                <div class="col-md-6">
+                    <input class="form-control" type="text" name="connection" value=""
+                        placeholder="Connection string or Project name">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <input class="btn btn-primary" type="submit" value="Push to Cloud">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

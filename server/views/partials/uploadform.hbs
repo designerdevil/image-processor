@@ -1,0 +1,10 @@
+<form id="uploadForm" enctype="multipart/form-data" action="{{uploadapi}}" method="post">
+    <label class="file-upload">
+        <input type="file" name="imageAsset" multiple>
+    </label>
+    {{!-- <input class="btn btn-primary" type="submit" value="Upload" name="submit"> --}}
+    <button id="uploadSubmit" class="btn btn-primary" type="submit" value="Upload" name="submit">
+        <span id="status" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span>
+        <span id="buttontxt">Upload</span>
+    </button>
+</form>
