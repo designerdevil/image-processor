@@ -1,5 +1,5 @@
 const fs = require("fs");
-const Jimp = require("jimp");
+const { Jimp } = require("jimp");
 const route = require("../constants/endpoints");
 const { commonUtil, imgProcess } = require('../utils/commonUtils')
 const { allowedFiles } = require('../../config')
@@ -37,7 +37,7 @@ module.exports = (req, res, next) => {
             return imgProcess.imgAttr(item, imageLocation, imgName);
         })
         imgConfig.images = imgObj;
-        console.log(imgConfig.images)
+        
         imgProcess.generateBreakpoints(items);
         imgConfig.status = Object.assign(imgConfig.status, {
             isUploading: false,

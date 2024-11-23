@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
         const suffix = item.suffix || '';
         const prefix = item.prefix || '';
         const imgExtn = imgObj.name.split('.');
-        const imgName = imgExtn.splice(0, imgExtn.length - 1); 
+        const imgName = imgExtn.splice(0, imgExtn.length - 1);
         dirs.push({
             dimension: imgObj.dimension,
             imgRoot: imgObj.imgRoot,
@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
             type: breakpoint,
             img: `${prefix}${imgName.join('')}${suffix}.${imgExtn.join('')}`,
             baseImg: img
-        })
+        });
     })
     res.render("layouts/main_adjust", {
         adjust: true,

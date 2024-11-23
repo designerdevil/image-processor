@@ -1,24 +1,25 @@
 const fs = require("fs");
 const path = require("path");
-const rimraf = require("rimraf");
+const { rimraf } = require("rimraf");
 const route = require("../constants/endpoints");
-const Jimp = require("jimp");
+const { Jimp, JimpMime } = require("jimp");
 const { imgDir } = require("../constants/appConstants");
 const breakpointConfig = require("../../config/breakpointConfig");
 const imgConfig = require("../../config/imgConfig");
-var zlib = require("zlib");
+const zlib = require("zlib");
 
 const commonUtil = {
     imageLocation: () => path.join(__dirname, `../../${imgDir.root}`),
     makeDir: (location, dirName) => {
-        var dir = `${location}/${dirName}`;
+        const dir = `${location ? location + '/' : ''}${dirName}`;
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir);
         }
         return dirName;
     },
-    removeAllFiles: (directory) => {
-        rimraf(`${directory}/**/*`, function () { console.log(":::Previous File Removed:::"); });
+    removeAllFiles: async (directory) => {
+        await rimraf(`${directory}/`, { glob: true }, function () { console.log(":::Previous File Removed:::"); });
+        await commonUtil.makeDir(null, directory);
     }
 }
 const mathUtil = {
@@ -38,34 +39,28 @@ const mathUtil = {
     }
 }
 const imgProcess = {
-    crop: (x, y, w, h, path, res, img) => {
+    crop: async (x, y, w, h, path, res, img) => {
         const imageLocation = commonUtil.imageLocation();
-        const fullpath = `${imageLocation}/${path}`
-        Jimp.read(fullpath, function (err, image) {
-            if (err)
-                console.log(err)
-            const pathAttr = path.split('/')
-            const imgExtn = pathAttr[2].split('.');
-            const imgName = `${imgExtn.splice(0, imgExtn.length - 1)}_cropped.${imgExtn}`;
-            const newFullPath = `${imageLocation}/${pathAttr[1]}/${imgName}`
-            image.crop(x, y, w, h)
-                .write(newFullPath);
-            const imgObj = imgConfig.images.filter(item => (item.name === img))[0]
-            if ( !( 'cropped' in imgObj ) ) imgObj['cropped'] = [];
-            const imgpath = `/${pathAttr[1]}/${imgName}`
-            if (imgObj.cropped.includes(imgpath) === false) imgObj.cropped.push(imgpath);
-            res.redirect(`${route.adjust}?img=${img}`)
-        });
+        const fullpath = `${imageLocation}/${path}`;
+        const image = await Jimp.read(fullpath);
+        const pathAttr = path.split('/')
+        const imgExtn = pathAttr[2].split('.');
+        const imgName = `${imgExtn.splice(0, imgExtn.length - 1)}_cropped.${imgExtn}`;
+        const newFullPath = `${imageLocation}/${pathAttr[1]}/${imgName}`
+        await image.crop({x, y, w, h})
+            .write(newFullPath);
+        const imgObj = imgConfig.images.filter(item => (item.name === img))[0]
+        if ( !( 'cropped' in imgObj ) ) imgObj['cropped'] = [];
+        const imgpath = `/${pathAttr[1]}/${imgName}`
+        if (imgObj.cropped.includes(imgpath) === false) imgObj.cropped.push(imgpath);
+        res.redirect(`${route.adjust}?img=${img}`)
     },
-    base64: (path, res) => {
+    base64: async (path, res) => {
         const imageLocation = commonUtil.imageLocation();
-        Jimp.read(`${imageLocation}/${path}`, function (err, image) {
-            image.getBase64(Jimp.AUTO, function (err, data) {
-                if (err)
-                    console.log(err)
-                res.send(data);
-            });
-        });
+        const image = await Jimp.read(`${imageLocation}/${path}`);
+        // console.log(image);
+        const data = await image.getBase64(image.mime);
+        res.send(data);
     },
     imgAttr: (item, imageLocation, imgName) => {
         const imgWidth = item.bitmap.width;
@@ -94,12 +89,12 @@ const imgProcess = {
                 const imgName = imgExtn.splice(0, imgExtn.length - 1);
                 if (item.bitmap.width > breakpoint) {
                     item.clone()
-                        .resize(breakpoint, Jimp.AUTO)
+                        .resize({ w: breakpoint, h: Jimp.AUTO })
                         .write(`${imageLocation}/${dir}/${prefix}${imgName.join('')}${suffix}.${imgExtn.join('')}`)
                 } else {
                     Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(font => {
                         item.clone()
-                            .resize(breakpoint, Jimp.AUTO)
+                            .resize({ w: breakpoint, h: Jimp.AUTO })
                             .greyscale()
                             .print(font, 10, 10, 'Degraded')
                             .fade(0.5)
@@ -112,7 +107,7 @@ const imgProcess = {
     resize: (dir, img, imageLocation, imgName) => {
         const thumbs = commonUtil.makeDir(imageLocation, dir)
         img.clone()
-            .resize(320, Jimp.AUTO)
+            .resize({ w: 320, h: Jimp.AUTO })
             .write(`${imageLocation}/${thumbs}/${imgName}`)
     }
 }

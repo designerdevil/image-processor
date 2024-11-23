@@ -1,4 +1,4 @@
-![Node version](https://img.shields.io/badge/node-%3E%3D10-green.svg) ![Express](https://img.shields.io/badge/server-express-yellow.svg)  ![Handlebars](https://img.shields.io/badge/template-handlebars-red.svg) ![Jimp](https://img.shields.io/badge/package-jimp-blue.svg)
+![Node version](https://img.shields.io/badge/node-%3E%3D20-green.svg) ![Express](https://img.shields.io/badge/server-express-yellow.svg)  ![Handlebars](https://img.shields.io/badge/template-handlebars-red.svg) ![Jimp](https://img.shields.io/badge/package-jimp-blue.svg)
 
 # image-processor
 Simple tool for batch processing the images with breakpoints and uploading it to Cloud. This tool uses [Jimp](https://github.com/oliver-moran/jimp) for image processing
