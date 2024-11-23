@@ -2,7 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const { rimraf } = require("rimraf");
 const route = require("../constants/endpoints");
-const { Jimp, JimpMime } = require("jimp");
+const { Jimp, loadFont } = require("jimp");
+const { SANS_128_WHITE } = require("jimp/fonts");
 const { imgDir } = require("../constants/appConstants");
 const breakpointConfig = require("../../config/breakpointConfig");
 const imgConfig = require("../../config/imgConfig");
@@ -83,7 +84,7 @@ const imgProcess = {
             const prefix = item.prefix || '';
             const breakpoint = item.width;
             const dir = commonUtil.makeDir(imageLocation, breakpoint)
-            imgObj.forEach((item, index) => {
+            imgObj.forEach(async (item, index) => {
                 const imgObj = imgConfig.images[index];
                 const imgExtn = imgObj.name.split('.');
                 const imgName = imgExtn.splice(0, imgExtn.length - 1);
@@ -92,14 +93,13 @@ const imgProcess = {
                         .resize({ w: breakpoint, h: Jimp.AUTO })
                         .write(`${imageLocation}/${dir}/${prefix}${imgName.join('')}${suffix}.${imgExtn.join('')}`)
                 } else {
-                    Jimp.loadFont(Jimp.FONT_SANS_16_WHITE).then(font => {
-                        item.clone()
+                    const font = await loadFont(SANS_128_WHITE);
+                    item.clone()
                             .resize({ w: breakpoint, h: Jimp.AUTO })
                             .greyscale()
-                            .print(font, 10, 10, 'Degraded')
+                            .print({ font, x: 10, y: 10, text: "Degraded" })
                             .fade(0.5)
                             .write(`${imageLocation}/${dir}/${prefix}${imgName.join('')}${suffix}.${imgExtn.join('')}`)
-                    });
                 }
             })
         });
